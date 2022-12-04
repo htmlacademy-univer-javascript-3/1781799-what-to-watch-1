@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-export const Film: FC = () => (
+export const FilmPage: FC = () => (
   <>
     <div className="visually-hidden">
       <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
