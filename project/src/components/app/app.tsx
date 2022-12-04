@@ -23,8 +23,7 @@ function App(props: Props): JSX.Element {
         <Route path={AppRoute.Main}>
           <Route index element={<MainPage promoFilm={props.promoFilm} user={props.user} films={props.films}/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
-          <Route path={AppRoute.MyList}
-                 element={<PrivateRoute authStatus={AuthStatus.NoAuth}><MyList/></PrivateRoute>}/>
+          <Route path={AppRoute.MyList} element={<PrivateRoute authStatus={AuthStatus.NoAuth}><MyList/></PrivateRoute>}/>
           <Route path={AppRoute.Film}>
             <Route index element={<FilmPage/>}/>
             <Route path={AppRoute.AddReview} element={<AddReview/>}/>
