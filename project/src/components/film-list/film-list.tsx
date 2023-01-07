@@ -11,7 +11,7 @@ export const FilmList: FC<Props> = (props) => {
 
   return (
     <div className="catalog__films-list">
-      {props.films.map((film) => <FilmCard key={film.title} {...film} onHover={setActiveFilmCard}/>)}
+      {props.films.map((film) => <FilmCard key={film.title} film={film} onHover={setActiveFilmCard}/>)}
     </div>
   );
 };

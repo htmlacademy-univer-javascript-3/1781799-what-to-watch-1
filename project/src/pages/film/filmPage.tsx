@@ -121,7 +121,7 @@ export const FilmPage: FC<Props> = (props) => {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {props.films.slice(0, 3).map((f) => <FilmCard key={f.id} {...f} />)}
+            {props.films.slice(0, 3).map((f) => <FilmCard key={f.id} film={f} />)}
           </div>
         </section>
 
