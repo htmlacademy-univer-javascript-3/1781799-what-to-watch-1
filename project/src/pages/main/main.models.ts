@@ -1,6 +1,15 @@
 export type Film = {
+  id: number;
   title: string;
   posterImagePath: string;
+  videoPath: string;
+  genre: string;
+  year: number;
+  description?: string;
+  director?: string;
+  starring?: string[];
+  rating?: number;
+  ratingCount?: number;
 }
 
 export type PromoFilm = Film & {

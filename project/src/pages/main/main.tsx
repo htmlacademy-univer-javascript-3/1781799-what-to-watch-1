@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { FilmCard } from '../../components/film/filmCard';
 import { Film, PromoFilm, User } from './main.models';
+import { FilmList } from '../../components/film-list/film-list';
 
 type Props = {
   promoFilm: PromoFilm;
@@ -70,7 +70,7 @@ export const MainPage: FC<Props> = (props) => (
 
       <header className="page-header film-card__head">
         <div className="logo">
-          <a href="main.html" className="logo__link">
+          <a href="/" className="logo__link">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -161,9 +161,7 @@ export const MainPage: FC<Props> = (props) => (
           </li>
         </ul>
 
-        <div className="catalog__films-list">
-          {props.films.map((film) => <FilmCard key={film.title} title={film.title} posterImagePath={film.posterImagePath} />)}
-        </div>
+        <FilmList films={props.films} />
 
         <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
@@ -172,7 +170,7 @@ export const MainPage: FC<Props> = (props) => (
 
       <footer className="page-footer">
         <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
+          <a href="/" className="logo__link logo__link--light">
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
