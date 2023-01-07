@@ -18,7 +18,7 @@ export const FilmCard: FC<Props> = (props) => {
       if (startPlaying) {
         setIsPlaying(true);
       }
-    }
+    };
 
     if (isHovering) {
       setTimeout(forceSetIsPlaying, 1000);
