@@ -23,12 +23,12 @@ function App(props: Props): JSX.Element {
         <Route path={AppRoute.Main}>
           <Route index element={<MainPage promoFilm={props.promoFilm} user={props.user} films={props.films}/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
-          <Route path={AppRoute.MyList} element={<PrivateRoute authStatus={AuthStatus.NoAuth}><MyList/></PrivateRoute>}/>
+          <Route path={AppRoute.MyList} element={<PrivateRoute authStatus={AuthStatus.NoAuth}><MyList {...props}/></PrivateRoute>}/>
           <Route path={AppRoute.Film}>
-            <Route index element={<FilmPage/>}/>
-            <Route path={AppRoute.AddReview} element={<AddReview/>}/>
+            <Route index element={<FilmPage {...props}/>}/>
+            <Route path={AppRoute.AddReview} element={<AddReview />}/>
           </Route>
-          <Route path={AppRoute.Player} element={<Player/>}/>
+          <Route path={AppRoute.Player} element={<Player film={props.promoFilm}/>}/>
           <Route path={AppRoute.NotFoundError} element={<NotFoundError/>}/>
         </Route>
       </Routes>
