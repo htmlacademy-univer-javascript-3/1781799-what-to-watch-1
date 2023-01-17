@@ -5,6 +5,7 @@ export type Film = {
   videoPath: string;
   genre: string;
   year: number;
+  runTime?: number;
   description?: string;
   director?: string;
   starring?: string[];
