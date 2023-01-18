@@ -1,36 +1,116 @@
-import { FC } from 'react';
+import {
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import {
+  Link,
+  useParams,
+} from 'react-router-dom';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../components/hooks/store-helpers';
+import { getFilm } from '../../store/film/film-selectors';
+import { fetchFilm, fetchFilmReviews, fetchSimilarFilms } from '../../store/api-actions';
+import { getFormatTime } from '../../common/functions';
 
-export const Player: FC = () => (
-  <div className="player">
-    <video src={'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4'} className="player__video" poster={'img/player-poster.jpg'}/>
+export const Player: FC = () => {
+  const film = useAppSelector(getFilm);
+  const params = useParams();
+  const id = Number(params.id);
+  const dispatch = useAppDispatch();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState<number>(0);
 
-    <button type="button" className="player__exit">Exit</button>
+  useEffect(() => {
+    if (!film || film.id !== id) {
+      dispatch(fetchFilm(Number(id)));
+    }
+  }, [dispatch, id, film]);
 
-    <div className="player__controls">
-      <div className="player__controls-row">
-        <div className="player__time">
-          <progress className="player__progress" value="30" max="100"></progress>
-          <div className="player__toggler" style={{ left: '30%' }}>Toggler</div>
+  const handleTimeUpdate = useCallback(() => {
+    if (videoRef?.current?.currentTime && videoRef?.current?.duration) {
+      setTimeLeft(videoRef?.current?.duration - videoRef?.current?.currentTime);
+      setProgress((videoRef?.current?.currentTime / videoRef?.current?.duration) * 100);
+    }
+  }, []);
+
+  const makeFullscreen = useCallback(() => {
+    if (videoRef.current?.requestFullscreen) {
+      videoRef.current?.requestFullscreen();
+    }
+  }, []);
+
+  const handleToggleClick = useCallback(() => {
+    if (videoRef.current?.paused) {
+      videoRef.current?.play();
+    } else {
+      videoRef.current?.pause();
+    }
+
+    setIsPlaying((prev) => !prev);
+  }, []);
+
+  const handleExitClick = useCallback(() => {
+    dispatch(fetchFilmReviews(id));
+    dispatch(fetchSimilarFilms(id));
+  }, [dispatch, id]);
+
+  return (
+    <div className="player">
+      <video className="player__video" src={film?.videoLink} ref={videoRef} poster={film?.posterImage}
+        onTimeUpdate={() => handleTimeUpdate()}
+      />
+
+      <Link to={`/films/${id}`} type="button" className="player__exit" onClick={handleExitClick}>Exit</Link>
+
+      <div className="player__controls">
+        <div className="player__controls-row">
+          <div className="player__time">
+            <progress className="player__progress" value={progress} max="100"></progress>
+            <div className="player__toggler" style={{ left: `${progress}%` }}>Toggler</div>
+          </div>
+          <div className="player__time-value">{getFormatTime(timeLeft)}</div>
         </div>
-        <div className="player__time-value">1:30:29</div>
-      </div>
 
-      <div className="player__controls-row">
-        <button type="button" className="player__play">
-          <svg viewBox="0 0 19 19" width="19" height="19">
-            <use xlinkHref="#play-s"></use>
-          </svg>
-          <span>Play</span>
-        </button>
-        <div className="player__name">Transpotting</div>
+        <div className="player__controls-row">
 
-        <button type="button" className="player__full-screen">
-          <svg viewBox="0 0 27 27" width="27" height="27">
-            <use xlinkHref="#full-screen"></use>
-          </svg>
-          <span>Full screen</span>
-        </button>
+          <button type="button" className="player__play" onClick={handleToggleClick}>
+            {
+              isPlaying
+                ? (
+                  <>
+                    <svg viewBox="0 0 14 21" width="14" height="21">
+                      <use xlinkHref="#pause"/>
+                    </svg>
+                    <span>Pause</span>
+                  </>
+                ) : (
+                  <>
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"/>
+                    </svg>
+                    <span>Play</span>
+                  </>
+                )
+            }
+
+          </button>
+          <div className="player__name">{film?.name}</div>
+
+          <button type="button" className="player__full-screen" onClick={makeFullscreen}>
+            <svg viewBox="0 0 27 27" width="27" height="27">
+              <use xlinkHref="#full-screen"/>
+            </svg>
+            <span>Full screen</span>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

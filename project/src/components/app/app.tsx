@@ -2,7 +2,7 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import React from 'react';
+import React, { FC } from 'react';
 import { MainPage } from '../../pages/main/main';
 import { AppRoute } from '../../common/models';
 import { SignIn } from '../../pages/sign-in/sign-in';
@@ -12,36 +12,28 @@ import { FilmPage } from '../../pages/film/filmPage';
 import { AddReview } from '../../pages/add-review/add-review';
 import { Player } from '../../pages/player/player';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
-import { useAppSelector } from '../hooks/store-helpers';
-import { Loader } from '../loader/loader';
 import { HistoryRouter } from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
-import { getFilms, getIsLoading } from '../../store/app/app-selectors';
 
-function App(): JSX.Element {
-  const films = useAppSelector(getFilms);
-  const isLoading = useAppSelector(getIsLoading);
-  if (isLoading) {
-    return <Loader/>;
-  }
-
-  return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route path={AppRoute.Main}>
-          <Route index element={<MainPage/>}/>
-          <Route path={AppRoute.SignIn} element={<SignIn/>}/>
-          <Route path={AppRoute.MyList} element={<PrivateRoute><MyList films={films}/></PrivateRoute>}/>
-          <Route path={AppRoute.Film}>
-            <Route index element={<FilmPage/>}/>
-            <Route path={AppRoute.AddReview} element={<AddReview/>}/>
-          </Route>
-          <Route path={AppRoute.Player} element={<Player/>}/>
-          <Route path={AppRoute.NotFoundError} element={<NotFoundError/>}/>
+export const App: FC = () => (
+  <HistoryRouter history={browserHistory}>
+    <Routes>
+      <Route path={AppRoute.Main}>
+        <Route index element={<MainPage/>}/>
+        <Route path={AppRoute.SignIn} element={<SignIn/>}/>
+        <Route path={AppRoute.MyList} element={
+          <PrivateRoute>
+            <MyList/>
+          </PrivateRoute>
+        }
+        />
+        <Route path={AppRoute.Film}>
+          <Route index element={<FilmPage/>}/>
+          <Route path={AppRoute.AddReview} element={<AddReview/>}/>
         </Route>
-      </Routes>
-    </HistoryRouter>
-  );
-}
-
-export default App;
+        <Route path={AppRoute.Player} element={<Player/>}/>
+        <Route path={AppRoute.NotFoundError} element={<NotFoundError/>}/>
+      </Route>
+    </Routes>
+  </HistoryRouter>
+);

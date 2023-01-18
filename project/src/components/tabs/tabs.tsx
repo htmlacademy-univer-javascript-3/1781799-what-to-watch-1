@@ -17,10 +17,10 @@ export const Tabs: FC<Props> = (props) => {
 
   const renderTabByType = () => {
     switch (activeTab) {
-      case Tab.DETAILS:
-        return <DetailsTab film={props.film}/>;
       case Tab.REVIEWS:
         return <ReviewsTab />;
+      case Tab.DETAILS:
+        return <DetailsTab film={props.film}/>;
       default:
         return <OverviewTab film={props.film}/>;
     }

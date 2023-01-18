@@ -15,6 +15,7 @@ export type Film = {
   rating?: number;
   scoresCount?: number;
   backgroundImage?: string;
+  isFavorite?: boolean;
 }
 
 export type User = {

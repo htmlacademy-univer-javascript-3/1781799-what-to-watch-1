@@ -1,7 +1,7 @@
 import {
   Dispatch,
   FC,
-  SetStateAction
+  SetStateAction,
 } from 'react';
 
 type Props = {

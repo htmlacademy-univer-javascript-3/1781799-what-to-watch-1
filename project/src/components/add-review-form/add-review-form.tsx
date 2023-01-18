@@ -1,12 +1,13 @@
 import {
   ChangeEvent,
   FC,
-  FormEvent, useCallback,
+  FormEvent,
+  useCallback,
   useState
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/store-helpers';
-import { postFilmReview } from '../../store/api-actions';
+import { fetchFilmReviews, postFilmReview } from '../../store/api-actions';
 
 type ReviewForm = {
   rating: number;
@@ -18,37 +19,26 @@ type Props = {
 };
 
 export const AddReviewForm: FC<Props> = (props) => {
-  const [formValues, setFormValues] = useState<ReviewForm>({
-    rating: 0,
-    comment: ''
-  });
+  const [formValues, setFormValues] = useState<ReviewForm>({ rating: 0, comment: '' });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const onSubmit = useCallback((review: ReviewForm) =>
-    dispatch(postFilmReview({ review, filmId: props.filmId })), [props.filmId, dispatch]);
 
   const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (formValues.comment && formValues.rating) {
-      onSubmit(formValues)
+      dispatch(postFilmReview({ review: formValues, filmId: props.filmId }))
+        .then(() => dispatch(fetchFilmReviews(props.filmId)))
         .then(() => navigate(`/films/${props.filmId}`));
     }
-  }, [formValues, navigate, props.filmId, onSubmit]);
+  }, [formValues, navigate, props.filmId, dispatch]);
 
   const handleReviewTextChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
-    setFormValues((prevValue) => ({
-      ...prevValue,
-      comment: event.target.value,
-    }));
+    setFormValues((prev) => ({ ...prev, comment: event.target.value, }));
   }, []);
 
   const handleStarsCountChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setFormValues((prevState) => ({
-      ...prevState,
-      rating: Number(event.target.value),
-    }));
+    setFormValues((prev) => ({ ...prev, rating: Number(event.target.value), }));
   }, []);
 
   return (

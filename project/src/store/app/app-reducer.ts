@@ -1,7 +1,3 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { ReducerName } from '../../common/models';
-import { Genre } from '../../types/genre.enum';
-import { AppState } from '../../types/state.type';
 import {
   setActiveGenre,
   setFilms,
@@ -11,12 +7,16 @@ import {
   fetchFilmsAction,
   fetchPromoFilm,
 } from '../api-actions';
+import { createSlice } from '@reduxjs/toolkit';
+import { ReducerName } from '../../common/models';
+import { Genre } from '../../types/genre.enum';
+import { AppState } from '../../types/state.type';
 
 const initialState: AppState = {
   genre: Genre.AllGenres,
   films: [],
   isLoading: false,
-  promoFilm: null
+  promoFilm: null,
 };
 
 export const appReducer = createSlice({

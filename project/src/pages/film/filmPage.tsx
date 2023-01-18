@@ -6,26 +6,34 @@ import {
   Link,
   useParams,
 } from 'react-router-dom';
-import { Tabs } from '../../components/tabs/tabs';
-import { FilmList } from '../../components/film-list/film-list';
 import {
   useAppDispatch,
   useAppSelector,
 } from '../../components/hooks/store-helpers';
+import {
+  getFilm,
+  getSimilarFilms,
+} from '../../store/film/film-selectors';
+import {
+  fetchFilm,
+  fetchFilmReviews,
+  fetchSimilarFilms,
+} from '../../store/api-actions';
+import { Tabs } from '../../components/tabs/tabs';
+import { FilmList } from '../../components/film-list/film-list';
 import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
 import { AuthStatus } from '../../common/models';
 import { Loader } from '../../components/loader/loader';
 import { getAuthStatus } from '../../store/user/user-selectors';
-import { getFilm, getSimilarFilms } from '../../store/film/film-selectors';
-import { fetchFilm, fetchFilmReviews, fetchSimilarFilms } from '../../store/api-actions';
+import { MyFilmsButton } from '../../components/my-films-buttom/my-films-button';
 
 export const FilmPage: FC = () => {
   const authorizationStatus = useAppSelector(getAuthStatus);
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilarFilms);
   const dispatch = useAppDispatch();
   const params = useParams();
   const id = Number(params.id);
-  const film = useAppSelector(getFilm);
-  const similarFilms = useAppSelector(getSimilarFilms);
 
   useEffect(() => {
     if (!film || film.id !== id) {
@@ -70,19 +78,13 @@ export const FilmPage: FC = () => {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={`/player/${id}`} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                </Link>
+                {authorizationStatus === AuthStatus.Auth ? <MyFilmsButton/> : null}
                 {
                   authorizationStatus === AuthStatus.Auth
                     ? <Link to={`/films/${film.id}/review`} className="btn film-card__button">Add review</Link>

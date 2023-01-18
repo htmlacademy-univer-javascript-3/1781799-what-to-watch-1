@@ -30,9 +30,7 @@ export const FilmCard: FC<Props> = (props) => {
       setTimeout(forceSetIsPlaying, 1000);
     }
 
-    return (() => {
-      startPlaying = false;
-    });
+    return (() => {startPlaying = false;});
   }, [isHovering]);
 
   const handleMouseEnter = () => {

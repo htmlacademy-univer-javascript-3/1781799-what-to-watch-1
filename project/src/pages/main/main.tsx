@@ -1,25 +1,43 @@
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../components/hooks/store-helpers';
+import {
+  getActiveGenre,
+  getFilms,
+  getPromoFilm,
+} from '../../store/app/app-selectors';
+import {
+  fetchFavoriteFilms,
+  fetchPromoFilm,
+} from '../../store/api-actions';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { FilmList } from '../../components/film-list/film-list';
 import { Genre } from '../../types/genre.enum';
-import { useAppDispatch, useAppSelector } from '../../components/hooks/store-helpers';
 import { GenreList } from '../../components/genre-list/genre-list';
 import { ShowMoreButton } from '../../components/show-more-button/show-more-button';
 import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
 import { Loader } from '../../components/loader/loader';
-import { getActiveGenre, getFilms, getPromoFilm } from '../../store/app/app-selectors';
-import { fetchPromoFilm } from '../../store/api-actions';
+import { getAuthStatus } from '../../store/user/user-selectors';
+import { MyFilmsButton } from '../../components/my-films-buttom/my-films-button';
+import { AuthStatus } from '../../common/models';
+import { Link } from 'react-router-dom';
 
 export const MainPage: FC = () => {
   const activeGenre = useAppSelector(getActiveGenre);
   const films = useAppSelector(getFilms);
-  const [visibleFilmsCount, setVisibleFilmsCount] = useState<number>(8);
-  const filteredFilms = useMemo(() => films.filter((film) => film.genre === activeGenre || activeGenre === Genre.AllGenres), [films, activeGenre]);
   const promoFilm = useAppSelector(getPromoFilm);
+  const authorizationStatus = useAppSelector(getAuthStatus);
+  const [visibleFilmsCount, setVisibleFilmsCount] = useState<number>(8);
+  const filteredFilms = useMemo(() => films
+    .filter((film) => film.genre === activeGenre || activeGenre === Genre.AllGenres),
+  [films, activeGenre]);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!promoFilm) {
       dispatch(fetchPromoFilm());
+      dispatch(fetchFavoriteFilms());
     }
   }, [dispatch, promoFilm]);
 
@@ -64,19 +82,13 @@ export const MainPage: FC = () => {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={`/player/${promoFilm.id}`} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                </Link>
+                {authorizationStatus === AuthStatus.Auth ? <MyFilmsButton/> : null}
               </div>
             </div>
           </div>

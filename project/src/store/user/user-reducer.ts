@@ -1,4 +1,3 @@
-import { createSlice } from '@reduxjs/toolkit';
 import {
   AuthStatus,
   ReducerName,
@@ -7,16 +6,18 @@ import {
   dropToken,
   saveToken,
 } from '../../services/token';
-import { UserState } from '../../types/state.type';
 import {
-  checkAuthAction,
+  checkAuthAction, fetchFavoriteFilms,
   loginAction,
   logoutAction,
 } from '../api-actions';
+import { createSlice } from '@reduxjs/toolkit';
+import { UserState } from '../../types/state.type';
 
 const initialState: UserState = {
   authorizationStatus: AuthStatus.Unknown,
   user: null,
+  favoriteFilms: [],
 };
 
 export const userReducer = createSlice({
@@ -42,6 +43,9 @@ export const userReducer = createSlice({
       .addCase(checkAuthAction.rejected, (state) => {
         state.user = null;
         state.authorizationStatus = AuthStatus.NoAuth;
+      })
+      .addCase(fetchFavoriteFilms.fulfilled, (state, action) => {
+        state.favoriteFilms = action.payload;
       });
   }
 });

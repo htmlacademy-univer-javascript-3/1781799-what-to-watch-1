@@ -1,10 +1,14 @@
-import { Dispatch, FC, SetStateAction } from 'react';
-import { setActiveGenre } from '../../store/action';
-import { Genre } from '../../types/genre.enum';
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+} from 'react';
 import {
   useAppDispatch,
   useAppSelector,
 } from '../hooks/store-helpers';
+import { setActiveGenre } from '../../store/action';
+import { Genre } from '../../types/genre.enum';
 import { getActiveGenre } from '../../store/app/app-selectors';
 
 type Props = {
