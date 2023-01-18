@@ -1,4 +1,5 @@
 import { Genre } from '../../types/genre.enum';
+import { Token } from '../../services/token';
 
 export type Film = {
   id: number;
@@ -22,5 +23,6 @@ export type PromoFilm = Film & {
 };
 
 export type User = {
-  avatarPath: string;
+  avatarUrl: string;
+  token: Token;
 }

@@ -6,6 +6,7 @@ import { Tabs } from '../../components/tabs/tabs';
 import { FilmList } from '../../components/film-list/film-list';
 import { Film } from '../main/main.models';
 import { useAppSelector } from '../../components/hooks/store-helpers';
+import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
 
 type Props = {
   films: Film[];
@@ -39,16 +40,7 @@ export const FilmPage: FC<Props> = (props: Props) => {
               </a>
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a href="/" className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <HeaderUserBlock/>
           </header>
 
           <div className="film-card__wrap">

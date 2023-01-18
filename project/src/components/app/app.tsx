@@ -1,7 +1,7 @@
 import { MainPage } from '../../pages/main/main';
-import { PromoFilm, User } from '../../pages/main/main.models';
+import { PromoFilm } from '../../pages/main/main.models';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../common/models';
+import { AppRoute } from '../../common/models';
 import { SignIn } from '../../pages/sign-in/sign-in';
 import { PrivateRoute } from '../private-route/private-route';
 import { MyList } from '../../pages/my-list/my-list';
@@ -14,26 +14,23 @@ import { Loader } from '../loader/loader';
 
 type Props = {
   promoFilm: PromoFilm;
-  user: User;
 };
 
 function App(props: Props): JSX.Element {
   const { films, isFilmsLoading } = useAppSelector((state) => state);
   if (isFilmsLoading) {
-    return <Loader />;
+    return <Loader/>;
   }
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main}>
-          <Route index element={<MainPage promoFilm={props.promoFilm} user={props.user}/>}/>
+          <Route index element={<MainPage promoFilm={props.promoFilm}/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
-          <Route path={AppRoute.MyList}
-            element={<PrivateRoute authStatus={AuthStatus.NoAuth}><MyList films={films}/></PrivateRoute>}
-          />
+          <Route path={AppRoute.MyList} element={<PrivateRoute><MyList films={films}/></PrivateRoute>}/>
           <Route path={AppRoute.Film}>
-            <Route index element={<FilmPage films={films} />}/>
+            <Route index element={<FilmPage films={films}/>}/>
             <Route path={AppRoute.AddReview} element={<AddReview/>}/>
           </Route>
           <Route path={AppRoute.Player} element={<Player film={props.promoFilm}/>}/>
