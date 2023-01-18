@@ -1,9 +1,11 @@
+import { Genre } from '../../types/genre.enum';
+
 export type Film = {
   id: number;
   title: string;
   posterImagePath: string;
   videoPath: string;
-  genre: string;
+  genre: Genre;
   year: number;
   runTime?: number;
   description?: string;
@@ -14,7 +16,7 @@ export type Film = {
 }
 
 export type PromoFilm = Film & {
-  genre: string;
+  genre: Genre;
   year: number;
   bigPosterImagePath: string;
 };
