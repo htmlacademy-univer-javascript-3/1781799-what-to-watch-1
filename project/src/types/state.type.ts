@@ -1,11 +1,11 @@
-import { AuthStatus } from '../common/models';
-import { store } from '../store';
-import { Genre } from './genre.enum';
-import { Review } from './review.type';
 import {
   Film,
   User,
 } from '../pages/main/main.models';
+import { AuthStatus } from '../common/models';
+import { store } from '../store';
+import { Genre } from './genre.enum';
+import { Review } from './review.type';
 
 export type AppState = {
   genre: Genre;
@@ -23,6 +23,7 @@ export type FilmState = {
 export type UserState = {
   authorizationStatus: AuthStatus;
   user: User | null;
+  favoriteFilms: Film[];
 };
 
 export type State = ReturnType<typeof store.getState>;

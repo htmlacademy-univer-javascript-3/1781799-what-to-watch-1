@@ -1,11 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { ReducerName } from '../../common/models';
-import { FilmState } from '../../types/state.type';
 import {
   fetchFilm,
   fetchFilmReviews,
   fetchSimilarFilms,
 } from '../api-actions';
+import { createSlice } from '@reduxjs/toolkit';
+import { ReducerName } from '../../common/models';
+import { FilmState } from '../../types/state.type';
 
 const initialState: FilmState = {
   film: null,

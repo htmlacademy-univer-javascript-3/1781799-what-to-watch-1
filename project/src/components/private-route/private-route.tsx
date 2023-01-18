@@ -1,8 +1,8 @@
-import { Navigate } from 'react-router-dom';
 import {
   AppRoute,
   AuthStatus,
 } from '../../common/models';
+import { Navigate } from 'react-router-dom';
 import { FC } from 'react';
 import { useAppSelector } from '../hooks/store-helpers';
 import { getAuthStatus } from '../../store/user/user-selectors';

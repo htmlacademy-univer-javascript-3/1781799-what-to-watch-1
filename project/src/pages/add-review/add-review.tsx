@@ -10,8 +10,8 @@ import { getFilm } from '../../store/film/film-selectors';
 import { NotFoundError } from '../not-found-error/not-found-error';
 
 export const AddReview: FC = () => {
-  const { id } = useParams();
   const film = useAppSelector(getFilm);
+  const { id } = useParams();
   if (!film) {
     return <NotFoundError/>;
   }

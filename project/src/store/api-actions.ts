@@ -1,5 +1,3 @@
-import { AxiosInstance } from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   Film,
   User,
@@ -10,6 +8,8 @@ import {
 } from '../types/state.type';
 import { AuthResponse } from '../types/auth-response';
 import { Review } from '../types/review.type';
+import { AxiosInstance } from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 type ApiConfig = {
   dispatch: AppDispatch;
@@ -53,6 +53,22 @@ export const fetchSimilarFilms = createAsyncThunk<Film[], number, ApiConfig>(
   'film/fetchSimilarFilms',
   async (filmId, { extra: api }) => {
     const { data } = await api.get<Film[]>(`films/${filmId}/similar`);
+    return data;
+  },
+);
+
+export const fetchFavoriteFilms = createAsyncThunk<Film[], undefined, ApiConfig>(
+  'user/fetchFavoriteFilms',
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<Film[]>('favorite');
+    return data;
+  },
+);
+
+export const changeFilmStatus = createAsyncThunk<Film, { filmId: number; isFavorite: boolean }, ApiConfig>(
+  'user/changeFilmStatus',
+  async (args, { extra: api }) => {
+    const { data } = await api.post<Film>(`favorite/${args.filmId}/${args.isFavorite ? 1 : 0}`);
     return data;
   },
 );

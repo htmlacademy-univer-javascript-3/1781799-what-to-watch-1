@@ -1,9 +1,24 @@
-import { FC, SyntheticEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../common/models';
-import { useAppDispatch, useAppSelector } from '../hooks/store-helpers';
+import {
+  FC,
+  SyntheticEvent,
+} from 'react';
+import {
+  Link,
+  useNavigate,
+} from 'react-router-dom';
+import {
+  AppRoute,
+  AuthStatus,
+} from '../../common/models';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../hooks/store-helpers';
+import {
+  getAuthStatus,
+  getUser,
+} from '../../store/user/user-selectors';
 import { logoutAction } from '../../store/api-actions';
-import { getAuthStatus, getUser } from '../../store/user/user-selectors';
 
 export const HeaderUserBlock: FC = () => {
   const authorizationStatus = useAppSelector(getAuthStatus);
@@ -34,7 +49,7 @@ export const HeaderUserBlock: FC = () => {
               </li>
             </>
           )
-          : <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
+          : <Link to={`/${AppRoute.SignIn}`} className="user-block__link">Sign in</Link>
       }
     </ul>
   );
