@@ -1,6 +1,5 @@
 import { MainPage } from '../../pages/main/main';
-import { PromoFilm } from '../../pages/main/main.models';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../common/models';
 import { SignIn } from '../../pages/sign-in/sign-in';
 import { PrivateRoute } from '../private-route/private-route';
@@ -11,33 +10,32 @@ import { Player } from '../../pages/player/player';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { useAppSelector } from '../hooks/store-helpers';
 import { Loader } from '../loader/loader';
+import React from 'react';
+import { HistoryRouter } from '../history-router/history-router';
+import { browserHistory } from '../../browser-history';
 
-type Props = {
-  promoFilm: PromoFilm;
-};
-
-function App(props: Props): JSX.Element {
+function App(): JSX.Element {
   const { films, isFilmsLoading } = useAppSelector((state) => state);
   if (isFilmsLoading) {
     return <Loader/>;
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main}>
-          <Route index element={<MainPage promoFilm={props.promoFilm}/>}/>
+          <Route index element={<MainPage/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
           <Route path={AppRoute.MyList} element={<PrivateRoute><MyList films={films}/></PrivateRoute>}/>
           <Route path={AppRoute.Film}>
-            <Route index element={<FilmPage films={films}/>}/>
+            <Route index element={<FilmPage/>}/>
             <Route path={AppRoute.AddReview} element={<AddReview/>}/>
           </Route>
-          <Route path={AppRoute.Player} element={<Player film={props.promoFilm}/>}/>
+          <Route path={AppRoute.Player} element={<Player/>}/>
           <Route path={AppRoute.NotFoundError} element={<NotFoundError/>}/>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

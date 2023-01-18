@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import { reviews } from '../../mocks/reviews';
 import { Tab } from '../../types/tab.enum';
 import { Film } from '../../pages/main/main.models';
 import { OverviewTab } from './overview-tab';
@@ -18,7 +17,7 @@ export const Tabs: FC<Props> = (props) => {
       case Tab.DETAILS:
         return <DetailsTab film={props.film}/>;
       case Tab.REVIEWS:
-        return <ReviewsTab reviews={reviews}/>;
+        return <ReviewsTab filmId={props.film.id}/>;
       default:
         return <OverviewTab film={props.film}/>;
     }
