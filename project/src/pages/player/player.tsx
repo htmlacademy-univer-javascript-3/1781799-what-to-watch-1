@@ -15,6 +15,7 @@ import {
 } from '../../components/hooks/store-helpers';
 import { getFilm } from '../../store/film/film-selectors';
 import { fetchFilm, fetchFilmReviews, fetchSimilarFilms } from '../../store/api-actions';
+import { getFormatTime } from '../../common/functions';
 
 export const Player: FC = () => {
   const film = useAppSelector(getFilm);
@@ -43,18 +44,6 @@ export const Player: FC = () => {
     if (videoRef.current?.requestFullscreen) {
       videoRef.current?.requestFullscreen();
     }
-  }, []);
-
-  const formatTime = useCallback((seconds: number) => {
-    const hours = Math.floor(seconds / 60 / 60);
-
-    if (hours) {
-      const minutes = Math.floor(seconds / 60);
-      return `${minutes}:${Math.floor(seconds % 60)}`;
-    }
-
-    const minutes = Math.floor(seconds / 60);
-    return `${hours}:${minutes}:${Math.floor(seconds % 60)}`;
   }, []);
 
   const handleToggleClick = useCallback(() => {
@@ -86,7 +75,7 @@ export const Player: FC = () => {
             <progress className="player__progress" value={progress} max="100"></progress>
             <div className="player__toggler" style={{ left: `${progress}%` }}>Toggler</div>
           </div>
-          <div className="player__time-value">{formatTime(timeLeft)}</div>
+          <div className="player__time-value">{getFormatTime(timeLeft)}</div>
         </div>
 
         <div className="player__controls-row">

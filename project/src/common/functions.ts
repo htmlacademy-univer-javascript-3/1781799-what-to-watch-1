@@ -15,3 +15,14 @@ export const getDescriptionByRating = (rating: number): string | undefined => {
     return 'Awesome';
   }
 };
+
+export const getFormatTime = (seconds: number) => {
+  const hours = Math.floor(seconds / 60 / 60);
+  const hoursString = `${hours}`.padStart(2, '0');
+  const minutes = `${Math.floor(seconds / 60 - hours * 60)}`.padStart(2, '0');
+  const sec = `${Math.floor(seconds % 60)}`.padStart(2, '0');
+
+  return hours < 1
+    ? `${minutes}:${sec}`
+    : `${hoursString}:${minutes}:${sec}`;
+};
