@@ -1,16 +1,11 @@
 import { FC } from 'react';
-import { Film } from '../main/main.models';
 import { Link, useParams } from 'react-router-dom';
 import { getFilmById } from '../../mocks/films';
 import { NotFoundError } from '../not-found-error/not-found-error';
 import { Tabs } from '../../components/tabs/tabs';
 import { FilmList } from '../../components/film-list/film-list';
 
-type Props = {
-  films: Film[];
-}
-
-export const FilmPage: FC<Props> = (props) => {
+export const FilmPage: FC = () => {
   const { id } = useParams();
   const film = getFilmById(Number(id));
 
@@ -93,7 +88,7 @@ export const FilmPage: FC<Props> = (props) => {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList films={props.films.filter((f) => f !== film && f.genre === film.genre).slice(0, 4)}/>
+          <FilmList forFilm={film} />
         </section>
 
         <footer className="page-footer">

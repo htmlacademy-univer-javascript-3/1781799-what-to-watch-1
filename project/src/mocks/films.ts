@@ -1,9 +1,10 @@
 import { Film, PromoFilm } from '../pages/main/main.models';
+import { Genre } from '../types/genre.enum';
 
 export const promoFilm: PromoFilm = {
   id: 0,
   title: 'The Grand Budapest Hotel',
-  genre: 'Drama',
+  genre: Genre.DRAMA,
   year: 2014,
   posterImagePath: 'img/the-grand-budapest-hotel-poster.jpg',
   bigPosterImagePath: 'img/bg-the-grand-budapest-hotel.jpg',
@@ -16,7 +17,7 @@ export const films: Film[] = [
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
     posterImagePath: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-    genre: 'Drama',
+    genre: Genre.DRAMA,
     year: 2014,
   },
   {
@@ -25,7 +26,7 @@ export const films: Film[] = [
     posterImagePath: 'img/bohemian-rhapsody.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.DRAMA,
   },
   {
     id: 2,
@@ -33,7 +34,7 @@ export const films: Film[] = [
     posterImagePath: 'img/macbeth.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.COMEDY,
   },
   {
     id: 3,
@@ -41,7 +42,7 @@ export const films: Film[] = [
     posterImagePath: 'img/aviator.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.COMEDY,
   },
   {
     id: 4,
@@ -49,7 +50,7 @@ export const films: Film[] = [
     posterImagePath: 'img/we-need-to-talk-about-kevin.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.COMEDY,
   },
   {
     id: 5,
@@ -57,7 +58,7 @@ export const films: Film[] = [
     posterImagePath: 'img/what-we-do-in-the-shadows.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.COMEDY,
   },
   {
     id: 6,
@@ -65,7 +66,7 @@ export const films: Film[] = [
     posterImagePath: 'img/revenant.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.COMEDY,
   },
   {
     id: 7,
@@ -73,7 +74,7 @@ export const films: Film[] = [
     posterImagePath: 'img/johnny-english.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.THRILLER,
   },
   {
     id: 8,
@@ -81,7 +82,7 @@ export const films: Film[] = [
     posterImagePath: 'img/shutter-island.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.THRILLER,
   },
   {
     id: 9,
@@ -89,7 +90,7 @@ export const films: Film[] = [
     posterImagePath: 'img/pulp-fiction.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.THRILLER,
   },
   {
     id: 10,
@@ -97,7 +98,7 @@ export const films: Film[] = [
     posterImagePath: 'img/no-country-for-old-men.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.THRILLER,
   },
   {
     id: 11,
@@ -105,7 +106,7 @@ export const films: Film[] = [
     posterImagePath: 'img/snatch.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.CRIME,
   },
   {
     id: 12,
@@ -113,7 +114,7 @@ export const films: Film[] = [
     posterImagePath: 'img/moonrise-kingdom.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.CRIME,
   },
   {
     id: 13,
@@ -121,7 +122,7 @@ export const films: Film[] = [
     posterImagePath: 'img/seven-years-in-tibet.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.CRIME,
   },
   {
     id: 14,
@@ -129,7 +130,7 @@ export const films: Film[] = [
     posterImagePath: 'img/midnight-special.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.KIDS_AND_FAMILY,
   },
   {
     id: 15,
@@ -137,7 +138,7 @@ export const films: Film[] = [
     posterImagePath: 'img/war-of-the-worlds.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.KIDS_AND_FAMILY,
   },
   {
     id: 16,
@@ -145,7 +146,7 @@ export const films: Film[] = [
     posterImagePath: 'img/dardjeeling-limited.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.KIDS_AND_FAMILY,
   },
   {
     id: 17,
@@ -153,7 +154,7 @@ export const films: Film[] = [
     posterImagePath: 'img/orlando.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.KIDS_AND_FAMILY,
   },
   {
     id: 18,
@@ -161,7 +162,7 @@ export const films: Film[] = [
     posterImagePath: 'img/mindhunter.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.SCI_FI,
   },
   {
     id: 19,
@@ -169,7 +170,7 @@ export const films: Film[] = [
     posterImagePath: 'img/midnight-special.jpg',
     videoPath: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
     year: 2014,
-    genre: 'Drama',
+    genre: Genre.SCI_FI,
   }
 ];
 

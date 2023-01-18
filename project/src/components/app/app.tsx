@@ -21,11 +21,11 @@ function App(props: Props): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main}>
-          <Route index element={<MainPage promoFilm={props.promoFilm} user={props.user} films={props.films}/>}/>
+          <Route index element={<MainPage promoFilm={props.promoFilm} user={props.user} />}/>
           <Route path={AppRoute.SignIn} element={<SignIn/>}/>
           <Route path={AppRoute.MyList} element={<PrivateRoute authStatus={AuthStatus.NoAuth}><MyList {...props}/></PrivateRoute>}/>
           <Route path={AppRoute.Film}>
-            <Route index element={<FilmPage {...props}/>}/>
+            <Route index element={<FilmPage />}/>
             <Route path={AppRoute.AddReview} element={<AddReview />}/>
           </Route>
           <Route path={AppRoute.Player} element={<Player film={props.promoFilm}/>}/>
