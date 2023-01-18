@@ -2,22 +2,22 @@ import { Genre } from '../../types/genre.enum';
 
 export type Film = {
   id: number;
-  title: string;
-  posterImagePath: string;
-  videoPath: string;
+  name: string;
+  posterImage: string;
+  videoLink: string;
   genre: Genre;
-  year: number;
+  released: number;
   runTime?: number;
   description?: string;
   director?: string;
   starring?: string[];
   rating?: number;
-  ratingCount?: number;
+  scoresCount?: number;
 }
 
 export type PromoFilm = Film & {
   genre: Genre;
-  year: number;
+  released: number;
   bigPosterImagePath: string;
 };
 

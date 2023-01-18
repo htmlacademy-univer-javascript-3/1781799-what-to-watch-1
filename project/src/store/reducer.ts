@@ -1,19 +1,23 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { films } from '../mocks/films';
 import { Genre } from '../types/genre.enum';
-import { changeActiveGenre, setFilmList } from './action';
+import { setActiveGenre, setFilms, setFilmsLoading } from './action';
+import { Film } from '../pages/main/main.models';
 
 const initialState = {
-  activeGenre: Genre.ALL_GENRES,
-  films,
+  activeGenre: Genre.AllGenres,
+  films: [] as Film[],
+  isFilmsLoading: true,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeActiveGenre, (state, action) => {
+    .addCase(setActiveGenre, (state, action) => {
       state.activeGenre = action.payload.newGenre;
     })
-    .addCase(setFilmList, (state, action) => {
+    .addCase(setFilms, (state, action) => {
       state.films = action.payload.films;
+    })
+    .addCase(setFilmsLoading, (state, action) => {
+      state.isFilmsLoading = action.payload;
     });
 });

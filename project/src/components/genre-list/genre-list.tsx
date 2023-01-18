@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react';
-import { changeActiveGenre } from '../../store/action';
+import { setActiveGenre } from '../../store/action';
 import { Genre } from '../../types/genre.enum';
 import { useAppDispatch, useAppSelector } from '../hooks/store-helpers';
 
@@ -13,7 +13,7 @@ export const GenreList: FC<Props> = (props) => {
   const dispatch = useAppDispatch();
 
   const handleChangeActiveGenre = (genre: string) => {
-    dispatch(changeActiveGenre({ newGenre: genre as Genre }));
+    dispatch(setActiveGenre({ newGenre: genre as Genre }));
     props.setVisibleFilmsCount(8);
   };
 

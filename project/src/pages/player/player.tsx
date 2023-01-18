@@ -7,7 +7,7 @@ type Props = {
 
 export const Player: FC<Props> = (props) => (
   <div className="player">
-    <video src={props.film.videoPath} className="player__video" poster={props.film.posterImagePath}/>
+    <video src={props.film.videoLink} className="player__video" poster={props.film.posterImage}/>
 
     <button type="button" className="player__exit">Exit</button>
 
