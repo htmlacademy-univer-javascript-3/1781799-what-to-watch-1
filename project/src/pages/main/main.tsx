@@ -1,24 +1,27 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Film } from './main.models';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { FilmList } from '../../components/film-list/film-list';
 import { Genre } from '../../types/genre.enum';
-import { useAppSelector } from '../../components/hooks/store-helpers';
+import { useAppDispatch, useAppSelector } from '../../components/hooks/store-helpers';
 import { GenreList } from '../../components/genre-list/genre-list';
 import { ShowMoreButton } from '../../components/show-more-button/show-more-button';
 import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
-import { api } from '../../store';
 import { Loader } from '../../components/loader/loader';
+import { getActiveGenre, getFilms, getPromoFilm } from '../../store/app/app-selectors';
+import { fetchPromoFilm } from '../../store/api-actions';
 
 export const MainPage: FC = () => {
-  const { activeGenre, films } = useAppSelector((state) => state);
+  const activeGenre = useAppSelector(getActiveGenre);
+  const films = useAppSelector(getFilms);
   const [visibleFilmsCount, setVisibleFilmsCount] = useState<number>(8);
-  const filteredFilms = films.filter((film) => film.genre === activeGenre || activeGenre === Genre.AllGenres);
-  const [promoFilm, setPromoFilm] = useState<Film>();
+  const filteredFilms = useMemo(() => films.filter((film) => film.genre === activeGenre || activeGenre === Genre.AllGenres), [films, activeGenre]);
+  const promoFilm = useAppSelector(getPromoFilm);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    api.get('/promo')
-      .then(({data}) => setPromoFilm(data as Film));
-  }, []);
+    if (!promoFilm) {
+      dispatch(fetchPromoFilm());
+    }
+  }, [dispatch, promoFilm]);
 
   if (!promoFilm) {
     return <Loader/>;

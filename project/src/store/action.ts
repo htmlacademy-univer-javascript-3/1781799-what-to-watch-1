@@ -1,7 +1,13 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Film, User } from '../pages/main/main.models';
+import {
+  Film,
+  User,
+} from '../pages/main/main.models';
 import { Genre } from '../types/genre.enum';
-import { AppRoute, AuthStatus } from '../common/models';
+import {
+  AppRoute,
+  AuthStatus,
+} from '../common/models';
 
 export const setActiveGenre = createAction<{ newGenre: Genre }>('setActiveGenre');
 export const setFilms = createAction<{ films: Film[] }>('setFilms');

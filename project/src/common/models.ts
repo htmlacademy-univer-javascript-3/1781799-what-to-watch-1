@@ -13,3 +13,9 @@ export enum AuthStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum ReducerName {
+  App = 'App',
+  Film = 'Film',
+  User = 'User',
+}

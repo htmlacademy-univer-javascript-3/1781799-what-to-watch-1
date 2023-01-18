@@ -1,4 +1,10 @@
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { Link } from 'react-router-dom';
 import { VideoPlayer } from '../video-player/VideoPlayer';
 import { Film } from '../../pages/main/main.models';

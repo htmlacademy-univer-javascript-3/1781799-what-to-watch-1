@@ -1,4 +1,7 @@
-import { FC } from 'react';
+import {
+  FC,
+  useMemo,
+} from 'react';
 import { format } from 'date-fns';
 import { Review } from '../../types/review.type';
 
@@ -7,7 +10,7 @@ type Props = {
 };
 
 export const ReviewCard: FC<Props> = (props) => {
-  const reviewDate = new Date(props.review.date);
+  const reviewDate = useMemo(() => new Date(props.review.date), [props.review]);
 
   return (
     <div className="review">

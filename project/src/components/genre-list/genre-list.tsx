@@ -1,7 +1,11 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { setActiveGenre } from '../../store/action';
 import { Genre } from '../../types/genre.enum';
-import { useAppDispatch, useAppSelector } from '../hooks/store-helpers';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../hooks/store-helpers';
+import { getActiveGenre } from '../../store/app/app-selectors';
 
 type Props = {
   genres: string[];
@@ -9,7 +13,7 @@ type Props = {
 }
 
 export const GenreList: FC<Props> = (props) => {
-  const { activeGenre } = useAppSelector((state) => state);
+  const activeGenre = useAppSelector(getActiveGenre);
   const dispatch = useAppDispatch();
 
   const handleChangeActiveGenre = (genre: string) => {

@@ -1,6 +1,12 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { api } from '../../store';
-import { Review } from '../../types/review.type';
+import {
+  ChangeEvent,
+  FC,
+  FormEvent, useCallback,
+  useState
+} from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../hooks/store-helpers';
+import { postFilmReview } from '../../store/api-actions';
 
 type ReviewForm = {
   rating: number;
@@ -16,32 +22,34 @@ export const AddReviewForm: FC<Props> = (props) => {
     rating: 0,
     comment: ''
   });
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const onSubmit = async (review: ReviewForm) => {
-    await api.post<Review[]>(`comments/${props.filmId}`, { ...review });
-  };
+  const onSubmit = useCallback((review: ReviewForm) =>
+    dispatch(postFilmReview({ review, filmId: props.filmId })), [props.filmId, dispatch]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (formValues.comment && formValues.rating) {
-      onSubmit(formValues);
+      onSubmit(formValues)
+        .then(() => navigate(`/films/${props.filmId}`));
     }
-  };
+  }, [formValues, navigate, props.filmId, onSubmit]);
 
-  const handleReviewTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleReviewTextChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
     setFormValues((prevValue) => ({
       ...prevValue,
       comment: event.target.value,
     }));
-  };
+  }, []);
 
-  const handleStarsCountChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleStarsCountChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setFormValues((prevState) => ({
       ...prevState,
       rating: Number(event.target.value),
     }));
-  };
+  }, []);
 
   return (
     <form action="#" className="add-review__form" onSubmit={handleSubmit}>
