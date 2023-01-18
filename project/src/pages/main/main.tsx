@@ -14,7 +14,7 @@ type Props = {
 export const MainPage: FC<Props> = (props) => {
   const { activeGenre, films } = useAppSelector((state) => state);
   const [visibleFilmsCount, setVisibleFilmsCount] = useState<number>(8);
-  const filteredFilms = films.filter((film) => film.genre === activeGenre || activeGenre === Genre.ALL_GENRES);
+  const filteredFilms = films.filter((film) => film.genre === activeGenre || activeGenre === Genre.AllGenres);
 
   return (
     <>
@@ -71,7 +71,7 @@ export const MainPage: FC<Props> = (props) => {
 
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={props.promoFilm.bigPosterImagePath} alt={props.promoFilm.title}/>
+          <img src={props.promoFilm.bigPosterImagePath} alt={props.promoFilm.name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -100,16 +100,16 @@ export const MainPage: FC<Props> = (props) => {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={props.promoFilm.posterImagePath} alt={`${props.promoFilm.title} poster`} width="218"
+              <img src={props.promoFilm.posterImage} alt={`${props.promoFilm.name} poster`} width="218"
                 height="327"
               />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{props.promoFilm.title}</h2>
+              <h2 className="film-card__title">{props.promoFilm.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{props.promoFilm.genre}</span>
-                <span className="film-card__year">{props.promoFilm.year}</span>
+                <span className="film-card__year">{props.promoFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -136,7 +136,7 @@ export const MainPage: FC<Props> = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList genres={[Genre.ALL_GENRES, ...new Set(films.map((film) => film.genre))]} setVisibleFilmsCount={setVisibleFilmsCount}/>
+          <GenreList genres={[Genre.AllGenres, ...new Set(films.map((film) => film.genre))]} setVisibleFilmsCount={setVisibleFilmsCount}/>
           <FilmList films={filteredFilms.slice(0, visibleFilmsCount)} />
           <ShowMoreButton setVisibleFilmsCount={setVisibleFilmsCount} isVisible={filteredFilms.length > visibleFilmsCount}/>
         </section>

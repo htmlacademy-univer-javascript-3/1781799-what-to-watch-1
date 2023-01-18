@@ -29,7 +29,7 @@ export const DetailsTab: FC<Props> = (props) => (
       </p>
       <p className="film-card__details-item">
         <strong className="film-card__details-name">Released</strong>
-        <span className="film-card__details-value">{props.film.year}</span>
+        <span className="film-card__details-value">{props.film.released}</span>
       </p>
     </div>
   </div>

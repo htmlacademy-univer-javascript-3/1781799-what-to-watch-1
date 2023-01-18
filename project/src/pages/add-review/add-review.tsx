@@ -2,16 +2,18 @@ import { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getFilmById } from '../../mocks/films';
 import { AddReviewForm } from '../../components/add-review-form/add-review-form';
+import { useAppSelector } from '../../components/hooks/store-helpers';
 
 export const AddReview: FC = () => {
+  const { films } = useAppSelector((state) => state);
   const { id } = useParams();
-  const film = getFilmById(Number(id));
+  const film = getFilmById(films, Number(id));
 
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film?.posterImagePath} alt={film?.title}/>
+          <img src={film?.posterImage} alt={film?.name}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -28,7 +30,7 @@ export const AddReview: FC = () => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link className={'breadcrumbs__link'} to={`/films/${film?.id}`}>{film?.title}</Link>
+                <Link className={'breadcrumbs__link'} to={`/films/${film?.id}`}>{film?.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <Link className={'breadcrumbs__link'} to={`/films/${film?.id}/review`}>Add review</Link>
@@ -49,7 +51,7 @@ export const AddReview: FC = () => {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film?.posterImagePath} alt={film?.title} width="218" height="327"/>
+          <img src={film?.posterImage} alt={film?.name} width="218" height="327"/>
         </div>
       </div>
 

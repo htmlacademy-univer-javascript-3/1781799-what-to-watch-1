@@ -46,7 +46,7 @@ export const FilmCard: FC<Props> = (props) => {
         <VideoPlayer muted film={props.film} isPlaying={isPlaying} width={280} height={175}/>
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${props.film.id}`}>{props.film.title}</Link>
+        <Link className="small-film-card__link" to={`/films/${props.film.id}`}>{props.film.name}</Link>
       </h3>
     </article>
   );

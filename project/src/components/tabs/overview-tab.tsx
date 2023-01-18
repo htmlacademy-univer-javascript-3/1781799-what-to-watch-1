@@ -12,7 +12,7 @@ export const OverviewTab: FC<Props> = (props) => (
       <div className="film-rating__score">{props.film.rating}</div>
       <p className="film-rating__meta">
         <span className="film-rating__level">{getDescriptionByRating(props.film.rating || 10)}</span>
-        <span className="film-rating__count">{props.film.ratingCount}</span>
+        <span className="film-rating__count">{props.film.scoresCount}</span>
       </p>
     </div>
 
