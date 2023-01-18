@@ -1,28 +1,20 @@
-import { FC, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { FC } from 'react';
+import {
+  Link,
+  useParams,
+} from 'react-router-dom';
 import { AddReviewForm } from '../../components/add-review-form/add-review-form';
-import { useAppDispatch } from '../../components/hooks/store-helpers';
+import { useAppSelector } from '../../components/hooks/store-helpers';
 import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
-import { api } from '../../store';
-import { Film } from '../main/main.models';
-import { redirectToRoute } from '../../store/action';
-import { AppRoute } from '../../common/models';
+import { getFilm } from '../../store/film/film-selectors';
+import { NotFoundError } from '../not-found-error/not-found-error';
 
 export const AddReview: FC = () => {
-  const dispatch = useAppDispatch();
   const { id } = useParams();
-  const [film, setFilm] = useState<Film>();
-
-  useEffect(() => {
-    api.get<Film>(`films/${id as string}`)
-      .then(({ data }) => {
-        if (data) {
-          setFilm(data);
-        } else {
-          dispatch(redirectToRoute(AppRoute.NotFoundError));
-        }
-      });
-  }, [id]);
+  const film = useAppSelector(getFilm);
+  if (!film) {
+    return <NotFoundError/>;
+  }
 
   return (
     <section className="film-card film-card--full">

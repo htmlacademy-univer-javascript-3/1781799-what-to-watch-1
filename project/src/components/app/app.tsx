@@ -1,5 +1,9 @@
+import {
+  Route,
+  Routes,
+} from 'react-router-dom';
+import React from 'react';
 import { MainPage } from '../../pages/main/main';
-import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../common/models';
 import { SignIn } from '../../pages/sign-in/sign-in';
 import { PrivateRoute } from '../private-route/private-route';
@@ -10,13 +14,14 @@ import { Player } from '../../pages/player/player';
 import { NotFoundError } from '../../pages/not-found-error/not-found-error';
 import { useAppSelector } from '../hooks/store-helpers';
 import { Loader } from '../loader/loader';
-import React from 'react';
 import { HistoryRouter } from '../history-router/history-router';
 import { browserHistory } from '../../browser-history';
+import { getFilms, getIsLoading } from '../../store/app/app-selectors';
 
 function App(): JSX.Element {
-  const { films, isFilmsLoading } = useAppSelector((state) => state);
-  if (isFilmsLoading) {
+  const films = useAppSelector(getFilms);
+  const isLoading = useAppSelector(getIsLoading);
+  if (isLoading) {
     return <Loader/>;
   }
 

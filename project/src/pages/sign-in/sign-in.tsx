@@ -1,11 +1,22 @@
-import { FC, FormEvent, useRef } from 'react';
-import { useAppDispatch, useAppSelector } from '../../components/hooks/store-helpers';
+import {
+  FC,
+  FormEvent,
+  useRef,
+} from 'react';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../components/hooks/store-helpers';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute, AuthStatus } from '../../common/models';
-import { loginAction } from '../../store/api-action';
+import {
+  AppRoute,
+  AuthStatus,
+} from '../../common/models';
+import { loginAction } from '../../store/api-actions';
+import { getAuthStatus } from '../../store/user/user-selectors';
 
 export const SignIn: FC = () => {
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

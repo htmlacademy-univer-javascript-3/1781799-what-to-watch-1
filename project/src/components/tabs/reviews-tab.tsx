@@ -1,28 +1,19 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { ReviewCard } from '../review-card/review-card';
-import { Review } from '../../types/review.type';
-import { api } from '../../store';
+import { useAppSelector } from '../hooks/store-helpers';
+import { getFilmReviews } from '../../store/film/film-selectors';
 
-type Props = {
-  filmId: number;
-};
-
-export const ReviewsTab: FC<Props> = (props) => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-
-  useEffect(() => {
-    api.get<Review[]>(`comments/${props.filmId}`)
-      .then(({ data }) => setReviews(data));
-  }, []);
+export const ReviewsTab: FC = () => {
+  const reviews = useAppSelector(getFilmReviews);
 
   return (
     <div className="film-card__reviews film-card__row">
       {
-        Array.from(Array(Math.ceil(reviews.length / 3)).keys()).map((cur) => (
+        Array.from(Array(Math.ceil(reviews.length / 2)).keys()).map((cur) => (
           <div key={cur} className="film-card__reviews-col">
             {
               reviews
-                .slice(cur * 3, cur * 3 + 3)
+                .slice(cur * 2, cur * 2 + 2)
                 .map((review) => <ReviewCard key={review.id} review={review}/>)
             }
           </div>

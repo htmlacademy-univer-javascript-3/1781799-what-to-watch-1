@@ -1,4 +1,7 @@
-import { FC, useState } from 'react';
+import {
+  FC,
+  useState,
+} from 'react';
 import { FilmCard } from '../film/filmCard';
 import { Film } from '../../pages/main/main.models';
 

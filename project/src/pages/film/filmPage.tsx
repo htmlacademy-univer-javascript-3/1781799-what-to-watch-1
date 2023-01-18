@@ -1,34 +1,39 @@
-import { FC, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import {
+  FC,
+  useEffect,
+} from 'react';
+import {
+  Link,
+  useParams,
+} from 'react-router-dom';
 import { Tabs } from '../../components/tabs/tabs';
 import { FilmList } from '../../components/film-list/film-list';
-import { Film } from '../main/main.models';
-import { useAppDispatch, useAppSelector } from '../../components/hooks/store-helpers';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../components/hooks/store-helpers';
 import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
-import { api } from '../../store';
-import { redirectToRoute } from '../../store/action';
-import { AppRoute, AuthStatus } from '../../common/models';
+import { AuthStatus } from '../../common/models';
 import { Loader } from '../../components/loader/loader';
+import { getAuthStatus } from '../../store/user/user-selectors';
+import { getFilm, getSimilarFilms } from '../../store/film/film-selectors';
+import { fetchFilm, fetchFilmReviews, fetchSimilarFilms } from '../../store/api-actions';
 
 export const FilmPage: FC = () => {
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
-  const { id } = useParams();
-  const [film, setFilm] = useState<Film>();
-  const [films, setFilms] = useState<Film[]>([]);
+  const params = useParams();
+  const id = Number(params.id);
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilarFilms);
 
   useEffect(() => {
-    api.get<Film>(`films/${id as string}`)
-      .then(({ data }) => {
-        if (data) {
-          setFilm(data);
-        } else {
-          dispatch(redirectToRoute(AppRoute.NotFoundError));
-        }
-      });
-    api.get<Film[]>(`films/${id as string}/similar`)
-      .then(({ data }) => setFilms(data));
-  }, [id]);
+    if (!film || film.id !== id) {
+      dispatch(fetchFilm(id));
+      dispatch(fetchSimilarFilms(id));
+      dispatch(fetchFilmReviews(id));
+    }
+  }, [film, dispatch, id]);
 
   if (!film) {
     return <Loader/>;
@@ -39,7 +44,7 @@ export const FilmPage: FC = () => {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.posterImage} alt={film.name}/>
+            <img src={film.backgroundImage} alt={film.name}/>
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -104,7 +109,7 @@ export const FilmPage: FC = () => {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList films={films}/>
+          <FilmList films={similarFilms}/>
         </section>
 
         <footer className="page-footer">

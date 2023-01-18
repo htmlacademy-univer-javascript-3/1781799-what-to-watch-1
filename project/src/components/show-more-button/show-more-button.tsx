@@ -1,4 +1,8 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import {
+  Dispatch,
+  FC,
+  SetStateAction
+} from 'react';
 
 type Props = {
   isVisible: boolean;
