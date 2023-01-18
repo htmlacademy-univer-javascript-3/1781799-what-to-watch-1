@@ -1,9 +1,10 @@
-import { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { PromoFilm, User } from './main.models';
 import { FilmList } from '../../components/film-list/film-list';
-import { GenreList } from '../../components/genre-list/genre-list';
 import { Genre } from '../../types/genre.enum';
 import { useAppSelector } from '../../components/hooks/store-helpers';
+import { GenreList } from '../../components/genre-list/genre-list';
+import { ShowMoreButton } from '../../components/show-more-button/show-more-button';
 
 type Props = {
   promoFilm: PromoFilm;
@@ -11,7 +12,9 @@ type Props = {
 };
 
 export const MainPage: FC<Props> = (props) => {
-  const {films} = useAppSelector((state) => state);
+  const { activeGenre, films } = useAppSelector((state) => state);
+  const [visibleFilmsCount, setVisibleFilmsCount] = useState<number>(8);
+  const filteredFilms = films.filter((film) => film.genre === activeGenre || activeGenre === Genre.ALL_GENRES);
 
   return (
     <>
@@ -68,7 +71,7 @@ export const MainPage: FC<Props> = (props) => {
 
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={props.promoFilm.bigPosterImagePath} alt={props.promoFilm.title} />
+          <img src={props.promoFilm.bigPosterImagePath} alt={props.promoFilm.title}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -133,12 +136,9 @@ export const MainPage: FC<Props> = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList genreList={[Genre.ALL_GENRES, ...new Set(films.map((film) => film.genre))]} />
-          <FilmList />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <GenreList genres={[Genre.ALL_GENRES, ...new Set(films.map((film) => film.genre))]} setVisibleFilmsCount={setVisibleFilmsCount}/>
+          <FilmList films={filteredFilms.slice(0, visibleFilmsCount)} />
+          <ShowMoreButton setVisibleFilmsCount={setVisibleFilmsCount} isVisible={filteredFilms.length > visibleFilmsCount}/>
         </section>
 
         <footer className="page-footer">
