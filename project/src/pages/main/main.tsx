@@ -1,14 +1,14 @@
 import React, { FC, useState } from 'react';
-import { PromoFilm, User } from './main.models';
+import { PromoFilm } from './main.models';
 import { FilmList } from '../../components/film-list/film-list';
 import { Genre } from '../../types/genre.enum';
 import { useAppSelector } from '../../components/hooks/store-helpers';
 import { GenreList } from '../../components/genre-list/genre-list';
 import { ShowMoreButton } from '../../components/show-more-button/show-more-button';
+import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
 
 type Props = {
   promoFilm: PromoFilm;
-  user: User;
 };
 
 export const MainPage: FC<Props> = (props) => {
@@ -85,16 +85,7 @@ export const MainPage: FC<Props> = (props) => {
             </a>
           </div>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src={props.user.avatarPath} alt="User avatar" width="63" height="63"/>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a href="/" className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <HeaderUserBlock />
         </header>
 
         <div className="film-card__wrap">
