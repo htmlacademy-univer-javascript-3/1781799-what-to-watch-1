@@ -14,13 +14,8 @@ export type Film = {
   starring?: string[];
   rating?: number;
   scoresCount?: number;
+  backgroundImage?: string;
 }
-
-export type PromoFilm = Film & {
-  genre: Genre;
-  released: number;
-  bigPosterImagePath: string;
-};
 
 export type User = {
   avatarUrl: string;

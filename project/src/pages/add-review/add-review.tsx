@@ -1,14 +1,28 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getFilmById } from '../../mocks/films';
 import { AddReviewForm } from '../../components/add-review-form/add-review-form';
-import { useAppSelector } from '../../components/hooks/store-helpers';
+import { useAppDispatch } from '../../components/hooks/store-helpers';
 import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
+import { api } from '../../store';
+import { Film } from '../main/main.models';
+import { redirectToRoute } from '../../store/action';
+import { AppRoute } from '../../common/models';
 
 export const AddReview: FC = () => {
-  const { films } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
   const { id } = useParams();
-  const film = getFilmById(films, Number(id));
+  const [film, setFilm] = useState<Film>();
+
+  useEffect(() => {
+    api.get<Film>(`films/${id as string}`)
+      .then(({ data }) => {
+        if (data) {
+          setFilm(data);
+        } else {
+          dispatch(redirectToRoute(AppRoute.NotFoundError));
+        }
+      });
+  }, [id]);
 
   return (
     <section className="film-card film-card--full">
@@ -31,10 +45,10 @@ export const AddReview: FC = () => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link className={'breadcrumbs__link'} to={`/films/${film?.id}`}>{film?.name}</Link>
+                <Link className={'breadcrumbs__link'} to={id ? `/films/${id}` : '#'}>{film?.name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link className={'breadcrumbs__link'} to={`/films/${film?.id}/review`}>Add review</Link>
+                <Link className={'breadcrumbs__link'} to={id ? `/films/${id}/review` : '#'}>Add review</Link>
               </li>
             </ul>
           </nav>
@@ -48,7 +62,7 @@ export const AddReview: FC = () => {
       </div>
 
       <div className="add-review">
-        <AddReviewForm />
+        <AddReviewForm filmId={Number(id)}/>
       </div>
 
     </section>

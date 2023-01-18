@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Film } from '../../pages/main/main.models';
-import { getDescriptionByRating } from '../../mocks/films';
+import { getDescriptionByRating } from '../../common/functions';
 
 type Props = {
   film: Film;

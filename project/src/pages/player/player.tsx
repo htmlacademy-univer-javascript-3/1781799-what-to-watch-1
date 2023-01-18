@@ -1,13 +1,8 @@
 import { FC } from 'react';
-import { Film } from '../main/main.models';
 
-type Props = {
-  film: Film;
-}
-
-export const Player: FC<Props> = (props) => (
+export const Player: FC = () => (
   <div className="player">
-    <video src={props.film.videoLink} className="player__video" poster={props.film.posterImage}/>
+    <video src={'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4'} className="player__video" poster={'img/player-poster.jpg'}/>
 
     <button type="button" className="player__exit">Exit</button>
 
