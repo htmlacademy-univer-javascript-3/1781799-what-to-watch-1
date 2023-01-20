@@ -49,7 +49,7 @@ export const AddReviewForm: FC<Props> = (props) => {
             Array.from(Array(10).keys()).map((n) => (
               <span key={`star-${n + 1}`}>
                 <input className="rating__input" id={`star-${n + 1}`} type="radio" name="rating" value={n + 1}
-                  checked={formValues.rating <= n + 1} onChange={handleStarsCountChange}
+                  checked={formValues.rating === n + 1} onChange={handleStarsCountChange}
                 />
                 <label className="rating__label" htmlFor={`star-${n + 1}`}>Rating {n + 1}</label>
               </span>
