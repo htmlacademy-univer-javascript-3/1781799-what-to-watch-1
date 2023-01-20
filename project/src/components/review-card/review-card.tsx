@@ -18,12 +18,12 @@ export const ReviewCard: FC<Props> = (props) => {
         <p className="review__text">{props.review.comment}</p>
 
         <footer className="review__details">
-          <cite className="review__author">{props.review.userName}</cite>
+          <cite className="review__author">{props.review.user.name || ''}</cite>
           <time className="review__date" dateTime={format(reviewDate, 'yyyy-MM-dd')}>{format(reviewDate, 'MMMM dd, yyyy')}</time>
         </footer>
       </blockquote>
 
-      <div className="review__rating">{props.review.rating}</div>
+      <div className="review__rating">{props.review.rating.toFixed(1)}</div>
     </div>
   );
 };

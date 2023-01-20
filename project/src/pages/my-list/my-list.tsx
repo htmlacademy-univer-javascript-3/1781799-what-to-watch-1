@@ -6,10 +6,10 @@ import {
   FC,
   useEffect,
 } from 'react';
-import { Link } from 'react-router-dom';
 import { HeaderUserBlock } from '../../components/header-user-block/header-user-block';
 import { getFavoriteFilms } from '../../store/user/user-selectors';
 import { fetchFavoriteFilms } from '../../store/api-actions';
+import { FilmCard } from '../../components/film/filmCard';
 
 export const MyList: FC = () => {
   const favoriteFilms = useAppSelector(getFavoriteFilms);
@@ -38,16 +38,7 @@ export const MyList: FC = () => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          {favoriteFilms.map((film) => (
-            <article className="small-film-card catalog__films-card" key={film.id}>
-              <div className="small-film-card__image">
-                <img src={film.posterImage} alt={film.name} width="280" height="175"/>
-              </div>
-              <h3 className="small-film-card__title">
-                <Link className="small-film-card__link" to={`/films/${film.id}`}>{film.name}</Link>
-              </h3>
-            </article>
-          ))}
+          {favoriteFilms.map((film) => (<FilmCard film={film} key={`film-${film.id}`}/>))}
         </div>
       </section>
 
