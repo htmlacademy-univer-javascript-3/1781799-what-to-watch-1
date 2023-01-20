@@ -3,6 +3,8 @@ export type Review = {
   date: string;
   id: number;
   rating: number;
-  userId: number;
-  userName: string;
+  user: {
+    id: number;
+    name: string;
+  };
 };

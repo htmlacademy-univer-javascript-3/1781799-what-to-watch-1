@@ -1,16 +1,6 @@
-import {
-  FC,
-  FormEvent,
-  useRef,
-} from 'react';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../components/hooks/store-helpers';
-import {
-  AppRoute,
-  AuthStatus,
-} from '../../common/models';
+import { FC, FormEvent, useEffect, useRef, } from 'react';
+import { useAppDispatch, useAppSelector, } from '../../components/hooks/store-helpers';
+import { AppRoute, AuthStatus, } from '../../common/models';
 import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions';
 import { getAuthStatus } from '../../store/user/user-selectors';
@@ -20,9 +10,11 @@ export const SignIn: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  if (authorizationStatus === AuthStatus.Auth){
-    navigate(AppRoute.Main);
-  }
+  useEffect(() => {
+    if (authorizationStatus === AuthStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [authorizationStatus, navigate]);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);

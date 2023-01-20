@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { VideoPlayer } from '../video-player/VideoPlayer';
 import { Film } from '../../pages/main/main.models';
 
@@ -17,6 +17,7 @@ type Props = {
 export const FilmCard: FC<Props> = (props) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isHovering, setIsHovering] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let startPlaying = true;
@@ -45,7 +46,7 @@ export const FilmCard: FC<Props> = (props) => {
   };
 
   return (
-    <article className="small-film-card catalog__films-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <article className="small-film-card catalog__films-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => navigate(`/films/${props.film.id}`)}>
       <div className="small-film-card__image">
         <VideoPlayer muted film={props.film} isPlaying={isPlaying} width={280} height={175}/>
       </div>

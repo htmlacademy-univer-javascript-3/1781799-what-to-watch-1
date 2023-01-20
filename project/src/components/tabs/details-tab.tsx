@@ -6,32 +6,39 @@ type Props = {
   film: Film;
 };
 
-export const DetailsTab: FC<Props> = (props) => (
-  <div className="film-card__text film-card__row">
-    <div className="film-card__text-col">
-      <p className="film-card__details-item">
-        <strong className="film-card__details-name">Director</strong>
-        <span className="film-card__details-value">{props.film.director}</span>
-      </p>
-      <p className="film-card__details-item">
-        <strong className="film-card__details-name">Starring</strong>
-        <span className="film-card__details-value">{props.film.starring?.join(',\n').split('\n').map((actor) => <div key={actor}>{actor}</div>)}</span>
-      </p>
-    </div>
+export const DetailsTab: FC<Props> = (props) => {
+  const starringList = props.film.starring?.join(',\n').split('\n');
+  if (starringList && starringList.length > 0) {
+    starringList[starringList.length - 1] += '.';
+  }
 
-    <div className="film-card__text-col">
-      <p className="film-card__details-item">
-        <strong className="film-card__details-name">Run Time</strong>
-        <span className="film-card__details-value">{getFormatTime(props.film.runTime ? props.film.runTime * 60 : 600)}</span>
-      </p>
-      <p className="film-card__details-item">
-        <strong className="film-card__details-name">Genre</strong>
-        <span className="film-card__details-value">{props.film.genre}</span>
-      </p>
-      <p className="film-card__details-item">
-        <strong className="film-card__details-name">Released</strong>
-        <span className="film-card__details-value">{props.film.released}</span>
-      </p>
+  return (
+    <div className="film-card__text film-card__row">
+      <div className="film-card__text-col">
+        <p className="film-card__details-item">
+          <strong className="film-card__details-name">Director</strong>
+          <span className="film-card__details-value">{props.film.director}</span>
+        </p>
+        <p className="film-card__details-item">
+          <strong className="film-card__details-name">Starring</strong>
+          <span className="film-card__details-value">{starringList?.map((actor) => <div key={actor}>{actor}</div>)}</span>
+        </p>
+      </div>
+
+      <div className="film-card__text-col">
+        <p className="film-card__details-item">
+          <strong className="film-card__details-name">Run Time</strong>
+          <span className="film-card__details-value">{getFormatTime(props.film.runTime ? props.film.runTime * 60 : 600)}</span>
+        </p>
+        <p className="film-card__details-item">
+          <strong className="film-card__details-name">Genre</strong>
+          <span className="film-card__details-value">{props.film.genre}</span>
+        </p>
+        <p className="film-card__details-item">
+          <strong className="film-card__details-name">Released</strong>
+          <span className="film-card__details-value">{props.film.released}</span>
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
